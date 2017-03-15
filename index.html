@@ -3,14 +3,9 @@
 
 <script src="firebase.js"></script>
 <script>
-  var config = {
-    apiKey: "AIzaSyDsgrxryBjQrS38vdxuDk_3RRJtuOGbU1c",
-    authDomain: "test-f24b5.firebaseapp.com",
-    databaseURL: "https://test-f24b5.firebaseio.com",
-    storageBucket: "test-f24b5.appspot.com",
-    messagingSenderId: "448358493027"
-  };
-  firebase.initializeApp(config);
+    firebase.initializeApp({
+        messagingSenderId: "448358493027"
+    });
 
     if ('Notification' in window) {
         var messaging = firebase.messaging();
