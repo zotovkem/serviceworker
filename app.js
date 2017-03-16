@@ -61,7 +61,16 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
 
-        new Notification(payload.notification.title, payload.notification);
+        var n = new Notification(payload.notification.title, {
+            body: payload.notification.body,
+            icon: payload.notification.icon
+
+        });
+
+        n.onclick = function(event) {
+            event.preventDefault();
+            window.location.href = payload.notification.click_action;
+        }
     });
 } else {
     console.warn('This browser does not support desktop notification.');
