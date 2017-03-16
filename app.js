@@ -10,6 +10,19 @@ var form = $('#notification');
 var massage_id = $('#massage_id');
 var massage_row = $('#massage_row');
 
+var input_body = $('#body');
+var timerId = setInterval(setNotificationDemoBody, 60000);
+
+function setNotificationDemoBody() {
+    if (input_body.val().search(/^It's found today at \d\d:\d\d$/i) !== -1) {
+        var now = new Date();
+        input_body.val('It\'s found today at ' + now.getHours() + ':' + (now.getMinutes() > 9 ? now.getMinutes() : '0' + now.getMinutes()));
+    } else {
+        clearInterval(timerId);
+    }
+}
+
+setNotificationDemoBody();
 resetUI();
 
 if (window.location.protocol === 'https:' && 'Notification' in window && 'serviceWorker' in navigator && 'localStorage' in window && 'fetch' in window) {
