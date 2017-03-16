@@ -69,7 +69,8 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
 
         n.onclick = function(event) {
             event.preventDefault();
-            window.location.href = payload.notification.click_action;
+            window.open(payload.notification.click_action, '_blank');
+            n.close();
         }
     });
 } else {
