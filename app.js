@@ -47,8 +47,8 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
 
     form.on('submit', function(event) {
         event.preventDefault();
-        console.log($(this).serialize());
-        sendNotification($(this).serialize());
+        console.log($(this).serializeArray());
+        sendNotification($(this).serializeArray());
     });
 
     // handle catch the notification on current page
