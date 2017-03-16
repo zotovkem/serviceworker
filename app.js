@@ -47,9 +47,10 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
         event.preventDefault();
 
         var notification = {};
-        for (var value in $(this).serializeArray()) {
-            notification[value.name] = value.value;
-        }
+        $(this).find(':input').each(function () {
+            var input = $(this);
+            notification[input.attr('name')] = input.val();
+        });
 
         console.log(notification);
         sendNotification(notification);
