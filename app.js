@@ -8,6 +8,7 @@ var bt_delete = $('#delete');
 var token = $('#token');
 var form = $('#notification');
 var massage_id = $('#massage_id');
+var massage_row = $('#massage_row');
 
 resetUI();
 
@@ -123,9 +124,11 @@ function sendNotification(notification) {
         console.log('Response', json);
 
         if (json.success == 1) {
-            massage_id.show().text(json.results[0].message_id);
+            massage_row.show();
+            massage_id.text(json.results[0].message_id);
         } else {
-            massage_id.hide().text('');
+            massage_row.hide();
+            massage_id.text('');
             console.error('Response error', json.results[0].error)
         }
     }).catch(function(error) {
@@ -176,7 +179,7 @@ function resetUI() {
     bt_register.show();
     bt_delete.hide();
     form.hide();
-    massage_id.hide();
+    massage_row.hide();
 }
 
 function updateUIForPushPermissionRequired() {
