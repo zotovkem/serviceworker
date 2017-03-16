@@ -128,8 +128,7 @@ function sendNotification(notification) {
             massage_id.text(json.results[0].message_id);
         } else {
             massage_row.hide();
-            massage_id.text('');
-            console.error('Response error', json.results[0].error)
+            massage_id.text(json.results[0].error);
         }
     }).catch(function(error) {
         console.error(error);
