@@ -4,9 +4,11 @@ firebase.initializeApp({
 
 
 var bt_register = $('#register');
-var bt_delete = $('#delete').hide();
+var bt_delete = $('#delete');
 var token = $('#token');
-var form = $('#notification').hide();
+var form = $('#notification');
+
+resetUI();
 
 if (window.location.protocol === 'https:' && 'Notification' in window && 'serviceWorker' in navigator && 'localStorage' in window && 'fetch' in window) {
     var messaging = firebase.messaging();
@@ -22,9 +24,27 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
             getToken();
         }
     });
+
     bt_delete.on('click', function() {
-        setTokenSentToServer(false);
+        // Delete Instance ID token.
+        messaging.getToken()
+            .then(function(currentToken) {
+                messaging.deleteToken(currentToken)
+                    .then(function() {
+                        console.log('Token deleted.');
+                        setTokenSentToServer(false);
+                        // Once token is deleted update UI.
+                        resetUI();
+                    })
+                    .catch(function(err) {
+                        console.log('Unable to delete token. ', err);
+                    });
+            })
+            .catch(function(err) {
+                console.log('Error retrieving Instance ID token. ', err);
+            });
     });
+
     form.on('submit', function(event) {
         event.preventDefault();
         console.log($(this).serialize());
@@ -135,6 +155,14 @@ function updateUIForPushEnabled(currentToken) {
     form.show();
 }
 
+function resetUI() {
+    token.text('');
+    bt_register.show();
+    bt_delete.hide();
+    form.hide();
+}
+
 function updateUIForPushPermissionRequired() {
     bt_register.attr('disabled', 'disabled');
+    resetUI();
 }
