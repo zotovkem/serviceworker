@@ -47,7 +47,7 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
         event.preventDefault();
 
         var notification = {};
-        $(this).find(':input').each(function () {
+        form.find(':input').each(function () {
             var input = $(this);
             notification[input.attr('name')] = input.val();
         });
