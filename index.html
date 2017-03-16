@@ -1,69 +1,65 @@
-<div id="token"></div>
-<button type="button" id="subscribe">Subscribe</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test Firebase Cloud Messaging</title>
 
+    <!-- Import Google Icon Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+</head>
+<body>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <h3 class="brand-logo">Test Firebase Cloud Messaging</h3>
+    </div>
+</nav>
+
+
+<main class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br>
+        <br>
+        <div class="row center">
+            <h4 class="header col s12 light">Instance ID Token</h4>
+            <p id="token" style="word-break: break-all;"></p>
+        </div>
+        <div class="row center">
+            <button type="button" class="btn-large waves-effect waves-light orange" id="register"><i class="material-icons left">vpn_key</i> Register</button>
+            <button type="button" class="btn-large waves-effect waves-light orange" id="delete"><i class="material-icons left">delete</i> Delete Token</button>
+        </div>
+        <div class="row">
+            <form action="" method="post" class="col s12" id="notification">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" name="title" id="title" value="Ералаш" class="validate">
+                        <label for="title">Notification title</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="text" name="body" id="body" value="Начало через 15 минут" class="validate">
+                        <label for="body">Notification message</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="text" name="icon" id="icon" value="https://eralash.ru.rsz.io/sites/all/themes/eralash_v5/logo.png?width=192&height=192" class="validate">
+                        <label for="icon">URL to notification icon</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="text" name="click_action" id="click_action" value="http://eralash.ru/" class="validate">
+                        <label for="click_action">Target URL for click action</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-large waves-effect waves-light orange" id="send"><i class="material-icons left">email</i> Send</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
 <script src="firebase.js"></script>
-<script>
-    firebase.initializeApp({
-        messagingSenderId: "448358493027"
-    });
-
-    if ('Notification' in window) {
-        var messaging = firebase.messaging();
-        var token = document.getElementById('token');
-        var subscribe = document.getElementById('subscribe');
-
-        var getToken = function() {
-            messaging.requestPermission()
-                .then(function() {
-                    // Get Instance ID token. Initially this makes a network call, once retrieved
-                    // subsequent calls to getToken will return from cache.
-                    messaging.getToken()
-                        .then(function(currentToken) {
-                            console.log(currentToken);
-                            token.innerText = currentToken;
-
-                            if (currentToken) {
-//                                sendTokenToServer(currentToken);
-//                                updateUIForPushEnabled(currentToken);
-                            } else {
-                                // Show permission request.
-                                console.warn('No Instance ID token available. Request permission to generate one.');
-                                // Show permission UI.
-//                                updateUIForPushPermissionRequired();
-//                                setTokenSentToServer(false);
-                                subscribe.setAttribute('disabled', 'disabled');
-                            }
-                        })
-                        .catch(function(err) {
-                            console.warn('An error occurred while retrieving token. ', err);
-//                            showToken('Error retrieving Instance ID token. ', err);
-//                            setTokenSentToServer(false);
-                            subscribe.setAttribute('disabled', 'disabled');
-                        });
-                })
-                .catch(function(err) {
-                    console.warn('Unable to get permission to notify.', err);
-                });
-        };
-
-        // already granted
-        if (Notification.permission === 'granted') {
-            getToken();
-        }
-
-        // get permission on subscribe only once
-        subscribe.addEventListener('click', function() {
-            if (Notification.permission !== 'granted') {
-                getToken();
-            }
-        });
-
-        messaging.onMessage(function(payload) {
-            console.log('Message received. ', payload);
-
-            new Notification(payload.notification.title, payload.notification);
-        });
-    } else {
-        console.warn('This browser does not support desktop notification.');
-    }
-</script>
+<script src="app.js"></script>
