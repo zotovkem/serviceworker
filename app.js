@@ -7,6 +7,7 @@ var bt_register = $('#register');
 var bt_delete = $('#delete');
 var token = $('#token');
 var form = $('#notification');
+var massage_id = $('#massage_id');
 
 resetUI();
 
@@ -52,7 +53,6 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
             notification[input.attr('name')] = input.val();
         });
 
-        console.log(notification);
         sendNotification(notification);
     });
 
@@ -105,6 +105,8 @@ function getToken() {
 function sendNotification(notification) {
     var key = 'AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs';
 
+    console.log('Send notification', notification);
+
     fetch('https://fcm.googleapis.com/fcm/send', {
         'method': 'POST',
         'headers': {
@@ -116,7 +118,15 @@ function sendNotification(notification) {
             'to': getCurrentToken()
         })
     }).then(function(response) {
-        console.log(response);
+        var data = response.json();
+        console.log('Response', data);
+
+        if (data.success == 1) {
+            massage_id.show().text(data.results[0].message_id);
+        } else {
+            massage_id.hide().text('');
+            console.error('Response error', data.results[0].error)
+        }
     }).catch(function(error) {
         console.error(error);
     })
@@ -165,6 +175,7 @@ function resetUI() {
     bt_register.show();
     bt_delete.hide();
     form.hide();
+    massage_id.hide();
 }
 
 function updateUIForPushPermissionRequired() {
