@@ -118,14 +118,15 @@ function sendNotification(notification) {
             'to': getCurrentToken()
         })
     }).then(function(response) {
-        var data = response.json();
-        console.log('Response', data);
+        return response.json();
+    }).then(function(json) {
+        console.log('Response', json);
 
-        if (data.success == 1) {
-            massage_id.show().text(data.results[0].message_id);
+        if (json.success == 1) {
+            massage_id.show().text(json.results[0].message_id);
         } else {
             massage_id.hide().text('');
-            console.error('Response error', data.results[0].error)
+            console.error('Response error', json.results[0].error)
         }
     }).catch(function(error) {
         console.error(error);
