@@ -20,9 +20,7 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
 
     // get permission on subscribe only once
     bt_register.on('click', function() {
-        if (Notification.permission !== 'granted') {
-            getToken();
-        }
+        getToken();
     });
 
     bt_delete.on('click', function() {
