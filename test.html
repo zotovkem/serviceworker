@@ -9,11 +9,7 @@
     Notification.requestPermission().then(function(permission) {
         document.write(permission);
         if (permission === 'granted') {
-            var n = new Notification('Test', {
-                body: 'Test body',
-                icon: 'https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg'
-            });
-            document.write(n);
+            var notify  = new Notification('Test');
         }
     });
 </script>
