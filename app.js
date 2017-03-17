@@ -80,7 +80,11 @@ if (window.location.protocol === 'https:' &&
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
         $('#info').show();
-        $('#info-message').html('<strong>'+payload.notification.title+'</strong><em>'+payload.notification.body+'</em>');
+        $('#info-message')
+            .text('')
+            .append('<strong>'+payload.notification.title+'</strong>')
+            .append('<em>'+payload.notification.body+'</em>')
+        ;
 
         // new Notification(payload.notification.title, payload.notification);
         var n = new Notification(payload.notification.title, {
