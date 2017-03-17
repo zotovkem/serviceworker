@@ -86,6 +86,7 @@ if (window.location.protocol === 'https:' &&
             .append('<em> '+payload.notification.body+'</em>')
         ;
 
+        // register fake ServiceWorker for show notification on mobile devices
         navigator.serviceWorker.register('sw.js');
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
