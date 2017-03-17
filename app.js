@@ -97,7 +97,7 @@ if (window.location.protocol === 'https:' &&
             event.preventDefault();
             window.open(payload.notification.click_action, '_blank');
             n.close();
-        }
+        };
     });
 } else {
     if (window.location.protocol !== 'https:') {

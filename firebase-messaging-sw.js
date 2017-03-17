@@ -6,3 +6,8 @@ firebase.initializeApp({
 });
 
 firebase.messaging();
+
+// Customize notification handler
+messaging.setBackgroundMessageHandler(function(payload) {
+    return self.registration.showNotification(payload.registration.title, payload.registration);
+});
