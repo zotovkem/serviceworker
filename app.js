@@ -91,11 +91,8 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification(payload.notification.title, {
-                        body: payload.notification.body,
-                        icon: payload.notification.icon,
-                        data: payload.notification.click_action
-                    });
+                    payload.notification.data = payload.notification;
+                    registration.showNotification(payload.notification.title, payload.notification);
                 }).catch(function(err) {
                     // registration failed :(
                     console.log('ServiceWorker registration failed: ', err);
