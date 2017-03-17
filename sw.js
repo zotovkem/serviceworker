@@ -1,5 +1,6 @@
 self.addEventListener('notificationclick', function(event) {
-    var target = event.notification.data.click_action || '/';
+    // var target = event.notification.data.click_action || '/';
+    var target = 'https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg';
     event.notification.close();
     event.waitUntil(self.clients.openWindow(target));
 
