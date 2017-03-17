@@ -83,7 +83,7 @@ if (window.location.protocol === 'https:' &&
         $('#info-message')
             .text('')
             .append('<strong>'+payload.notification.title+'</strong>')
-            .append('<em>'+payload.notification.body+'</em>')
+            .append('<em> '+payload.notification.body+'</em>')
         ;
 
         // new Notification(payload.notification.title, payload.notification);
