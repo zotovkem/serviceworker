@@ -96,11 +96,11 @@ if (window.location.protocol === 'https:' &&
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
                     payload.notification.data = payload.notification;
-                    return registration.showNotification(payload.notification.title, payload.notification);
-                }).then(function(event) {
-                    console.log(event);
-                    // window.open(payload.notification.click_action, '_blank');
-                    // event.notification.close();
+                    registration.showNotification(payload.notification.title, payload.notification).then(function(event) {
+                        console.log(event);
+                        // window.open(payload.notification.click_action, '_blank');
+                        // event.notification.close();
+                    });
                 }).catch(function(error) {
                     // registration failed :(
                     showError('ServiceWorker registration failed.', error);
