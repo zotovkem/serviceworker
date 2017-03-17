@@ -88,18 +88,22 @@ if (window.location.protocol === 'https:' &&
 
         Notification.requestPermission().then(function(permission) {
             if (permission === 'granted') {
-                // new Notification(payload.notification.title, payload.notification);
-                var n = new Notification(payload.notification.title, {
-                    body: payload.notification.body,
-                    icon: payload.notification.icon
-
+                // show test notification
+                var n = new Notification('Test', {
+                    body: 'Test body',
+                    icon: 'https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg'
                 });
 
-                n.onclick = function(event) {
-                    event.preventDefault();
-                    window.open(payload.notification.click_action, '_blank');
-                    n.close();
-                };
+                // var n = new Notification(payload.notification.title, {
+                //     body: payload.notification.body,
+                //     icon: payload.notification.icon
+                // });
+                //
+                // n.onclick = function(event) {
+                //     event.preventDefault();
+                //     window.open(payload.notification.click_action, '_blank');
+                //     n.close();
+                // };
             }
         });
     });
