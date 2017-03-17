@@ -101,18 +101,18 @@ if (window.location.protocol === 'https:' &&
     });
 
     // Callback fired if Instance ID token is updated.
-    messaging.onTokenRefresh(function() {
-        messaging.getToken()
-            .then(function(refreshedToken) {
-                console.log('Token refreshed.');
-                // Send Instance ID token to app server.
-                sendTokenToServer(refreshedToken);
-                updateUIForPushEnabled(refreshedToken);
-            })
-            .catch(function(error) {
-                showError('Unable to retrieve refreshed token.', error);
-            });
-    });
+    // messaging.onTokenRefresh(function() {
+    //     messaging.getToken()
+    //         .then(function(refreshedToken) {
+    //             console.log('Token refreshed.');
+    //             // Send Instance ID token to app server.
+    //             sendTokenToServer(refreshedToken);
+    //             updateUIForPushEnabled(refreshedToken);
+    //         })
+    //         .catch(function(error) {
+    //             showError('Unable to retrieve refreshed token.', error);
+    //         });
+    // });
 
 } else {
     if (window.location.protocol !== 'https:') {
