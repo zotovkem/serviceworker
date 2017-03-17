@@ -89,18 +89,18 @@ if (window.location.protocol === 'https:' &&
         navigator.serviceWorker.register('sw.js');
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
-                var notify = navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification(payload.notification.title, {
+                navigator.serviceWorker.ready.then(function(registration) {
+                    var notify = registration.showNotification(payload.notification.title, {
                         body: payload.notification.body,
                         icon: payload.notification.icon
                     });
-                });
 
-                notify.onclick = function(event) {
-                    event.preventDefault();
-                    window.open(payload.notification.click_action, '_blank');
-                    notify.close();
-                }
+                    notify.onclick = function(event) {
+                        event.preventDefault();
+                        window.open(payload.notification.click_action, '_blank');
+                        notify.close();
+                    }
+                });
             }
         });
     });
