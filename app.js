@@ -162,6 +162,10 @@ function sendNotification(notification) {
 
     console.log('Send notification', notification);
 
+    // hide last notification data
+    $('#info').hide();
+    massage_row.hide();
+
     fetch('https://fcm.googleapis.com/fcm/send', {
         'method': 'POST',
         'headers': {
