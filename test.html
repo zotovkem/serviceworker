@@ -6,11 +6,13 @@
 </head>
 <body>
 <script type="text/javascript">
-    Notification.requestPermission().then(function(permission) {
-        document.write(permission);
-//        if (permission === 'granted') {
-            var notify  = new Notification('Test');
-//        }
+    navigator.serviceWorker.register('firebase-messaging-sw.js');
+    Notification.requestPermission(function(permission) {
+        if (permission === 'granted') {
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.showNotification('Notification with ServiceWorker');
+            });
+        }
     });
 </script>
 </body>
