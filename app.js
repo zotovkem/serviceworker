@@ -25,7 +25,13 @@ function setNotificationDemoBody() {
 setNotificationDemoBody();
 resetUI();
 
-if (window.location.protocol === 'https:' && 'Notification' in window && 'serviceWorker' in navigator && 'localStorage' in window && 'fetch' in window) {
+if (window.location.protocol === 'https:' &&
+    'Notification' in window &&
+    'serviceWorker' in navigator &&
+    'localStorage' in window &&
+    'fetch' in window &&
+    'postMessage' in window
+) {
     var messaging = firebase.messaging();
 
     // already granted
@@ -88,12 +94,28 @@ if (window.location.protocol === 'https:' && 'Notification' in window && 'servic
         // }
     });
 } else {
+    if (window.location.protocol !== 'https:') {
+        showError('Is not from HTTPS');
+    } else if (!('Notification' in window)) {
+        showError('Notification not supported');
+    } else if (!('serviceWorker' in navigator)) {
+        showError('ServiceWorker not supported');
+    } else if (!('localStorage' in window)) {
+        showError('LocalStorage not supported');
+    } else if (!('fetch' in window)) {
+        showError('fetch not supported');
+    } else if (!('postMessage' in window)) {
+        showError('postMessage not supported');
+    }
+
     console.warn('This browser does not support desktop notification.');
-    console.warn('Is HTTPS', window.location.protocol === 'https:');
-    console.warn('Support Notification', 'Notification' in window);
-    console.warn('Support ServiceWorker', 'serviceWorker' in navigator);
-    console.warn('Support LocalStorage', 'localStorage' in window);
-    console.warn('Support fetch', 'fetch' in window);
+    console.log('Is HTTPS', window.location.protocol === 'https:');
+    console.log('Support Notification', 'Notification' in window);
+    console.log('Support ServiceWorker', 'serviceWorker' in navigator);
+    console.log('Support LocalStorage', 'localStorage' in window);
+    console.log('Support fetch', 'fetch' in window);
+    console.log('Support fetch', 'postMessage' in window);
+
     updateUIForPushPermissionRequired();
 }
 
@@ -110,19 +132,21 @@ function getToken() {
                         sendTokenToServer(currentToken);
                         updateUIForPushEnabled(currentToken);
                     } else {
-                        console.warn('No Instance ID token available. Request permission to generate one.');
+                        showError('No Instance ID token available. Request permission to generate one.');
                         updateUIForPushPermissionRequired();
                         setTokenSentToServer(false);
                     }
                 })
                 .catch(function(err) {
-                    console.warn('An error occurred while retrieving token. ', err);
+                    showError('An error occurred while retrieving token.');
+                    console.warn(err);
                     updateUIForPushPermissionRequired();
                     setTokenSentToServer(false);
                 });
         })
         .catch(function(err) {
-            console.warn('Unable to get permission to notify.', err);
+            showError('Unable to get permission to notify.');
+            console.warn(err);
         });
 }
 
@@ -155,7 +179,7 @@ function sendNotification(notification) {
             massage_id.text(json.results[0].error);
         }
     }).catch(function(error) {
-        console.error(error);
+        showError(error);
     })
 }
 
@@ -208,4 +232,10 @@ function resetUI() {
 function updateUIForPushPermissionRequired() {
     bt_register.attr('disabled', 'disabled');
     resetUI();
+}
+
+function showError(error) {
+    console.error(error);
+    $('#alert').show();
+    $('#alert-message').html(error);
 }

@@ -8,12 +8,22 @@
 
     <!-- Import Google Icon Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <style type="text/css">
+        #alert,
+        #delete,
+        #notification,
+        #massage_row {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <nav class="light-blue lighten-1" role="navigation">
@@ -27,6 +37,11 @@
     <div class="container">
         <br>
         <br>
+        <div class="card-panel deep-orange darken-1 white-text z-depth-2" id="alert">
+            <i class="material-icons left deep-orange-text text-darken-4">warning</i>
+            <strong>Error</strong>
+            <em id="alert-message"></em>
+        </div>
         <div class="row center">
             <h4 class="header col s12 light">Instance ID Token</h4>
             <p id="token" style="word-break: break-all;"></p>
