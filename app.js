@@ -98,8 +98,9 @@ if (window.location.protocol === 'https:' &&
                     payload.notification.data = payload.notification;
                     return registration.showNotification(payload.notification.title, payload.notification);
                 }).then(function(event) {
-                    window.open(payload.notification.click_action, '_blank');
-                    event.notification.close();
+                    console.log(event);
+                    // window.open(payload.notification.click_action, '_blank');
+                    // event.notification.close();
                 }).catch(function(error) {
                     // registration failed :(
                     showError('ServiceWorker registration failed.', error);
