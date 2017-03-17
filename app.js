@@ -86,6 +86,7 @@ if (window.location.protocol === 'https:' &&
             .append('<em> '+payload.notification.body+'</em>')
         ;
 
+        navigator.serviceWorker.register('sw.js');
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
