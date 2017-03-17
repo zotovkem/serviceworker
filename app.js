@@ -79,6 +79,8 @@ if (window.location.protocol === 'https:' &&
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
+        $('#info').show();
+        $('#info-message').text(payload.notification.title);
 
         new Notification(payload.notification.title, payload.notification);
         // var n = new Notification(payload.notification.title, {
@@ -114,7 +116,7 @@ if (window.location.protocol === 'https:' &&
     console.log('Support ServiceWorker', 'serviceWorker' in navigator);
     console.log('Support LocalStorage', 'localStorage' in window);
     console.log('Support fetch', 'fetch' in window);
-    console.log('Support fetch', 'postMessage' in window);
+    console.log('Support postMessage', 'postMessage' in window);
 
     updateUIForPushPermissionRequired();
 }
