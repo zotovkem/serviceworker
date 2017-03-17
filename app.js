@@ -82,18 +82,18 @@ if (window.location.protocol === 'https:' &&
         $('#info').show();
         $('#info-message').html('<strong>'+payload.notification.title+'</strong><em>'+payload.notification.body+'</em>');
 
-        new Notification(payload.notification.title, payload.notification);
-        // var n = new Notification(payload.notification.title, {
-        //     body: payload.notification.body,
-        //     icon: payload.notification.icon
-        //
-        // });
-        //
-        // n.onclick = function(event) {
-        //     event.preventDefault();
-        //     window.open(payload.notification.click_action, '_blank');
-        //     n.close();
-        // }
+        // new Notification(payload.notification.title, payload.notification);
+        var n = new Notification(payload.notification.title, {
+            body: payload.notification.body,
+            icon: payload.notification.icon
+
+        });
+
+        n.onclick = function(event) {
+            event.preventDefault();
+            window.open(payload.notification.click_action, '_blank');
+            n.close();
+        }
     });
 } else {
     if (window.location.protocol !== 'https:') {
