@@ -97,9 +97,9 @@ if (window.location.protocol === 'https:' &&
                 navigator.serviceWorker.ready.then(function(registration) {
                     payload.notification.data = payload.notification;
                     registration.showNotification(payload.notification.title, payload.notification);
-                }).catch(function(err) {
+                }).catch(function(error) {
                     // registration failed :(
-                    console.log('ServiceWorker registration failed: ', err);
+                    showError('ServiceWorker registration failed.', error);
                 });
             }
         });
