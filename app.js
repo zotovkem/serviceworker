@@ -90,16 +90,32 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                    var notify = registration.showNotification(payload.notification.title, {
+                    registration.showNotification(payload.notification.title, {
                         body: payload.notification.body,
                         icon: payload.notification.icon
                     });
 
-                    notify.onclick = function(event) {
-                        event.preventDefault();
-                        window.open(payload.notification.click_action, '_blank');
-                        notify.close();
-                    }
+                    registration.addEventListener('notificationclick', function(event) {
+                        var target = payload.notification.click_action || '/';
+                        event.notification.close();
+
+                        // This looks to see if the current is already open and focuses if it is
+                        event.waitUntil(clients.matchAll({
+                            type: 'window'
+                        }).then(function(clientList) {
+                            // clientList always is empty?!
+                            for (var i = 0; i < clientList.length; i++) {
+                                var client = clientList[i];
+                                if (client.url == target && 'focus' in client) {
+                                    return client.focus();
+                                }
+                            }
+
+                            if (clients.openWindow) {
+                                return clients.openWindow(target);
+                            }
+                        }));
+                    });
                 });
             }
         });
