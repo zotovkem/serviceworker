@@ -96,6 +96,7 @@ if (window.location.protocol === 'https:' &&
 
                     notify.onclick = function(event) {
                         event.preventDefault();
+                        console.log(payload.notification);
                         window.open(payload.notification.click_action, '_blank');
                         notify.close();
                     }
