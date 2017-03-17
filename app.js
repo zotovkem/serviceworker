@@ -89,11 +89,11 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.register('sw.js').then(function(registration) {
-                    var notify = registration.showNotification(payload.notification.title, {
+                    return registration.showNotification(payload.notification.title, {
                         body: payload.notification.body,
                         icon: payload.notification.icon
                     });
-
+                }).then(function(notify) {
                     notify.onclick = function(event) {
                         event.preventDefault();
                         console.log(payload.notification);
