@@ -55,12 +55,12 @@ if (window.location.protocol === 'https:' &&
                         // Once token is deleted update UI.
                         resetUI();
                     })
-                    .catch(function(err) {
-                        console.log('Unable to delete token. ', err);
+                    .catch(function(error) {
+                        showError('Unable to delete token.', error);
                     });
             })
-            .catch(function(err) {
-                console.log('Error retrieving Instance ID token. ', err);
+            .catch(function(error) {
+                showError('Error retrieving Instance ID token.', error);
             });
     });
 
@@ -109,8 +109,8 @@ if (window.location.protocol === 'https:' &&
                 sendTokenToServer(refreshedToken);
                 updateUIForPushEnabled(refreshedToken);
             })
-            .catch(function(err) {
-                console.log('Unable to retrieve refreshed token ', err);
+            .catch(function(error) {
+                showError('Unable to retrieve refreshed token.', error);
             });
     });
 
@@ -158,16 +158,14 @@ function getToken() {
                         setTokenSentToServer(false);
                     }
                 })
-                .catch(function(err) {
-                    showError('An error occurred while retrieving token.');
-                    console.warn(err);
+                .catch(function(error) {
+                    showError('An error occurred while retrieving token.', error);
                     updateUIForPushPermissionRequired();
                     setTokenSentToServer(false);
                 });
         })
-        .catch(function(err) {
-            showError('Unable to get permission to notify.');
-            console.warn(err);
+        .catch(function(error) {
+            showError('Unable to get permission to notify.', error);
         });
 }
 
@@ -209,8 +207,8 @@ function sendNotification(notification) {
                 showError(error);
             });
         })
-        .catch(function(err) {
-            console.log('Error retrieving Instance ID token. ', err);
+        .catch(function(error) {
+            showError('Error retrieving Instance ID token.', error);
         });
 }
 
@@ -261,8 +259,14 @@ function updateUIForPushPermissionRequired() {
     resetUI();
 }
 
-function showError(error) {
-    console.error(error);
+function showError(error, error_data) {
+    if (typeof error_data !== "undefined") {
+        console.error(error + ' ', error_data);
+    } else {
+        console.error(error);
+    }
+
     $('#alert').show();
     $('#alert-message').html(error);
+
 }
