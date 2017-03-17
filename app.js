@@ -99,6 +99,21 @@ if (window.location.protocol === 'https:' &&
             n.close();
         };
     });
+
+    // Callback fired if Instance ID token is updated.
+    messaging.onTokenRefresh(function() {
+        messaging.getToken()
+            .then(function(refreshedToken) {
+                console.log('Token refreshed.');
+                // Send Instance ID token to app server.
+                sendTokenToServer(refreshedToken);
+                updateUIForPushEnabled(refreshedToken);
+            })
+            .catch(function(err) {
+                console.log('Unable to retrieve refreshed token ', err);
+            });
+    });
+
 } else {
     if (window.location.protocol !== 'https:') {
         showError('Is not from HTTPS');
