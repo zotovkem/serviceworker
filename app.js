@@ -10,6 +10,12 @@ var form = $('#notification');
 var massage_id = $('#massage_id');
 var massage_row = $('#massage_row');
 
+var info = $('#info');
+var info_message = $('#info-message');
+
+var alert = $('#alert');
+var alert_message = $('#alert-message');
+
 var input_body = $('#body');
 var timerId = setInterval(setNotificationDemoBody, 5000);
 
@@ -83,8 +89,8 @@ if (window.location.protocol === 'https:' &&
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
-        $('#info').show();
-        $('#info-message')
+        info.show();
+        info_message
             .text('')
             .append('<strong>'+payload.notification.title+'</strong>')
             .append('<em> '+payload.notification.body+'</em>')
@@ -181,7 +187,7 @@ function sendNotification(notification) {
     console.log('Send notification', notification);
 
     // hide last notification data
-    $('#info').hide();
+    info.hide();
     massage_row.hide();
 
     messaging.getToken()
@@ -257,6 +263,7 @@ function resetUI() {
     bt_delete.hide();
     form.hide();
     massage_row.hide();
+    info.hide();
 }
 
 function updateUIForPushPermissionRequired() {
@@ -271,7 +278,6 @@ function showError(error, error_data) {
         console.error(error);
     }
 
-    $('#alert').show();
-    $('#alert-message').html(error);
-
+    alert.show();
+    alert_message.html(error);
 }
