@@ -1,5 +1,5 @@
 self.addEventListener('notificationclick', function(event) {
-    var target = event.notification.data.click_action || '/';
+    var target = event.notification.data || '/';
     event.notification.close();
 
     // This looks to see if the current is already open and focuses if it is
