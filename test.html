@@ -10,7 +10,10 @@
     Notification.requestPermission(function(permission) {
         if (permission === 'granted') {
             navigator.serviceWorker.ready.then(function(registration) {
-                registration.showNotification('Notification with ServiceWorker');
+                registration.showNotification('Test', {
+                    body: 'Test body',
+                    icon: 'https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg'
+                });
             });
         }
     });
