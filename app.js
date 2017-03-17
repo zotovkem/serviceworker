@@ -89,17 +89,11 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.register('sw.js').then(function(registration) {
-                    return registration.showNotification(payload.notification.title, {
+                    registration.showNotification(payload.notification.title, {
                         body: payload.notification.body,
-                        icon: payload.notification.icon
+                        icon: payload.notification.icon,
+                        data: payload.notification.click_action
                     });
-                }).then(function(notify) {
-                    notify.onclick = function(event) {
-                        event.preventDefault();
-                        console.log(payload.notification);
-                        window.open(payload.notification.click_action, '_blank');
-                        notify.close();
-                    }
                 }).catch(function(err) {
                     // registration failed :(
                     console.log('ServiceWorker registration failed: ', err);
