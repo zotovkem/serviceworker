@@ -86,18 +86,22 @@ if (window.location.protocol === 'https:' &&
             .append('<em> '+payload.notification.body+'</em>')
         ;
 
-        // new Notification(payload.notification.title, payload.notification);
-        var n = new Notification(payload.notification.title, {
-            body: payload.notification.body,
-            icon: payload.notification.icon
+        Notification.requestPermission().then(function(permission) {
+            if (permission === 'granted') {
+                // new Notification(payload.notification.title, payload.notification);
+                var n = new Notification(payload.notification.title, {
+                    body: payload.notification.body,
+                    icon: payload.notification.icon
 
+                });
+
+                n.onclick = function(event) {
+                    event.preventDefault();
+                    window.open(payload.notification.click_action, '_blank');
+                    n.close();
+                };
+            }
         });
-
-        n.onclick = function(event) {
-            event.preventDefault();
-            window.open(payload.notification.click_action, '_blank');
-            n.close();
-        };
     });
 
     // Callback fired if Instance ID token is updated.
