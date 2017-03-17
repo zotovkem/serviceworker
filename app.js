@@ -86,15 +86,22 @@ if (window.location.protocol === 'https:' &&
             .append('<em> '+payload.notification.body+'</em>')
         ;
 
-        navigator.serviceWorker.register('sw.js');
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
-                navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification(payload.notification.title, {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    var notify = registration.showNotification(payload.notification.title, {
                         body: payload.notification.body,
-                        icon: payload.notification.icon,
-                        data: payload.notification.click_action,
+                        icon: payload.notification.icon
                     });
+
+                    notify.onclick = function(event) {
+                        event.preventDefault();
+                        window.open(payload.notification.click_action, '_blank');
+                        notify.close();
+                    }
+                }).catch(function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker registration failed: ', err);
                 });
             }
         });
