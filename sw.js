@@ -1,4 +1,5 @@
 self.addEventListener('notificationclick', function(event) {
+    console.log(event);
     var target = event.notification.data || '/';
     event.notification.close();
 
