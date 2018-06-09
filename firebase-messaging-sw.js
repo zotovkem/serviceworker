@@ -5,7 +5,17 @@ firebase.initializeApp({
     'messagingSenderId': '448358493027'
 });
 
-firebase.messaging();
+const messaging = firebase.messaging();
+
+// Customize notification handler
+messaging.setBackgroundMessageHandler(function(payload) {
+  // FIXME Firebase does not send image yet
+  if (typeof payload.data.image !== 'undefined') {
+    payload.notification.image = payload.data.image;
+  }
+
+  return self.registration.showNotification(payload.notification.title, payload.notification);
+});
 
 self.addEventListener('notificationclick', function(event) {
     const target = event.notification.data.click_action || '/';
@@ -19,7 +29,7 @@ self.addEventListener('notificationclick', function(event) {
         // clientList always is empty?!
         for (var i = 0; i < clientList.length; i++) {
             var client = clientList[i];
-            if (client.url == target && 'focus' in client) {
+            if (client.url === target && 'focus' in client) {
                 return client.focus();
             }
         }
