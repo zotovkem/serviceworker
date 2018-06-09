@@ -78,12 +78,18 @@ if (window.location.protocol === 'https:' &&
         event.preventDefault();
 
         var notification = {};
+        var data = {};
         form.find('input').each(function () {
             var input = $(this);
             notification[input.attr('name')] = input.val();
+
+            // FIXME Firebase does not send image yet
+            if (input.attr('name') === 'image') {
+              data.image = input.val();
+            }
         });
 
-        sendNotification(notification);
+        sendNotification(notification, data);
     });
 
     // handle catch the notification on current page
@@ -101,7 +107,11 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                    payload.notification.data = payload.notification;
+                    // FIXME Firebase does not send image yet
+                    if (typeof payload.data.image !== 'undefined') {
+                      payload.notification.image = payload.data.image;
+                    }
+
                     registration.showNotification(payload.notification.title, payload.notification);
                 }).catch(function(error) {
                     // registration failed :(
@@ -181,7 +191,7 @@ function getToken() {
 }
 
 
-function sendNotification(notification) {
+function sendNotification(notification, data) {
     var key = 'AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs';
 
     console.log('Send notification', notification);
@@ -193,14 +203,15 @@ function sendNotification(notification) {
     messaging.getToken()
         .then(function(currentToken) {
             fetch('https://fcm.googleapis.com/fcm/send', {
-                'method': 'POST',
-                'headers': {
+                method: 'POST',
+                headers: {
                     'Authorization': 'key=' + key,
                     'Content-Type': 'application/json'
                 },
-                'body': JSON.stringify({
-                    'notification': notification,
-                    'to': currentToken
+                body: JSON.stringify({
+                    notification: notification,
+                    to: currentToken,
+                    data: data || {}
                 })
             }).then(function(response) {
                 return response.json();
