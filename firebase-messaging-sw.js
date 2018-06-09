@@ -9,9 +9,6 @@ const messaging = firebase.messaging();
 
 // Customize notification handler
 messaging.setBackgroundMessageHandler(function(payload) {
-  // copy data object
-  payload.data.data = JSON.parse(JSON.stringify(payload.data));
-
   return self.registration.showNotification(payload.data.title, payload.data);
 });
 
