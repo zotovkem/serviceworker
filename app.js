@@ -78,18 +78,12 @@ if (window.location.protocol === 'https:' &&
         event.preventDefault();
 
         var notification = {};
-        var data = {};
         form.find('input').each(function () {
             var input = $(this);
             notification[input.attr('name')] = input.val();
-
-            // FIXME Firebase does not send image yet
-            if (input.attr('name') === 'image') {
-              data.image = input.val();
-            }
         });
 
-        sendNotification(notification, data);
+        sendNotification(notification);
     });
 
     // handle catch the notification on current page
@@ -107,12 +101,10 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                    // FIXME Firebase does not send image yet
-                    if (typeof payload.data.image !== 'undefined') {
-                      payload.notification.image = payload.data.image;
-                    }
+                    // copy data object
+                    payload.data.data = JSON.parse(JSON.stringify(payload.data));
 
-                    registration.showNotification(payload.notification.title, payload.notification);
+                    registration.showNotification(payload.data.title, payload.data);
                 }).catch(function(error) {
                     // registration failed :(
                     showError('ServiceWorker registration failed.', error);
@@ -191,7 +183,7 @@ function getToken() {
 }
 
 
-function sendNotification(notification, data) {
+function sendNotification(notification) {
     var key = 'AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs';
 
     console.log('Send notification', notification);
@@ -209,16 +201,17 @@ function sendNotification(notification, data) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    notification: notification,
-                    to: currentToken,
-                    data: data || {}
+                    // Firebase loses 'image' from the notification.
+                    // And you must see this: https://github.com/firebase/quickstart-js/issues/71
+                    data: notification,
+                    to: currentToken
                 })
             }).then(function(response) {
                 return response.json();
             }).then(function(json) {
                 console.log('Response', json);
 
-                if (json.success == 1) {
+                if (json.success === 1) {
                     massage_row.show();
                     massage_id.text(json.results[0].message_id);
                 } else {
@@ -249,7 +242,7 @@ function sendTokenToServer(currentToken) {
 }
 
 function isTokenSentToServer(currentToken) {
-    return window.localStorage.getItem('sentFirebaseMessagingToken') == currentToken;
+    return window.localStorage.getItem('sentFirebaseMessagingToken') === currentToken;
 }
 
 function setTokenSentToServer(currentToken) {

@@ -7,6 +7,7 @@ You can test usage on page: https://peter-gribanov.github.io/serviceworker/
 
 > Firebase loses the `image` from the notification.
 > You can fix the problem by specifying a `image` in `data`.
+> And you must see [this](https://github.com/firebase/quickstart-js/issues/71) issue.
 
 
 Send notification from HTTP client
@@ -19,14 +20,12 @@ Authorization: key=AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSd
 Content-Type: application/json
 
 {
-  "notification": {
+  "data": {
     "title": "Bubble Nebula",
     "body": "It's found today at 21:00",
     "icon": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-    "click_action": "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble"
-  },
-  "data": {
     "image": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+    "click_action": "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble"
   }
   "to": "YOUR-TOKEN-ID"
 }
@@ -38,14 +37,12 @@ Send notification by cURL
 ```bash
 curl -d '
 {
-  "notification": {
+  "data": {
     "title": "Bubble Nebula",
     "body": "It`s found today at 21:00",
     "icon": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
-    "click_action": "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble"
-  },
-  "data": {
     "image": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
+    "click_action": "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble"
   }
   "to": "YOUR-TOKEN-ID"
 }' \
