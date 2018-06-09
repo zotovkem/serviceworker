@@ -17,6 +17,7 @@ Content-Type: application/json
     "title": "Bubble Nebula",
     "body": "It's found today at 21:00",
     "icon": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula.jpg",
+    "image": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
     "click_action": "https://www.nasa.gov/feature/goddard/2016/hubble-sees-a-star-inflating-a-giant-bubble"
   },
   "to": "YOUR-TOKEN-ID"
