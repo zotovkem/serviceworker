@@ -101,7 +101,10 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification(payload.data.title, payload.data);
+                  // Save data to get parameters in the click handler
+                  payload.data.data = payload.data;
+
+                  registration.showNotification(payload.data.title, payload.data);
                 }).catch(function(error) {
                     // registration failed :(
                     showError('ServiceWorker registration failed.', error);
