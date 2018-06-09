@@ -47,7 +47,7 @@ curl -d '
   "data": {
     "image": "https://peter-gribanov.github.io/serviceworker/Bubble-Nebula_big.jpg",
   }
-  "to": "c9w1LY6XeH8:APA91bEzZEgmVeYX6Fm0VKj79wL-mBnQUFq0dsZKAxowoXtnAa6FvKsnTv-_xq1o7KknYsDD-mZX44TB-nhq12jcbUNcDcA8ZHuXHCgXA9z0mw_Q078oHczHE1yPCYGyEIQfQKd08ky5"
+  "to": "YOUR-TOKEN-ID"
 }' \
     -H "Content-Type: application/json" \
     -H "Authorization: key=AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs" \
