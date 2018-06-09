@@ -60,17 +60,17 @@ if (window.location.protocol === 'https:' &&
             .then(function(currentToken) {
                 messaging.deleteToken(currentToken)
                     .then(function() {
-                        console.log('Token deleted.');
+                        console.log('Token deleted');
                         setTokenSentToServer(false);
                         // Once token is deleted update UI.
                         resetUI();
                     })
                     .catch(function(error) {
-                        showError('Unable to delete token.', error);
+                        showError('Unable to delete token', error);
                     });
             })
             .catch(function(error) {
-                showError('Error retrieving Instance ID token.', error);
+                showError('Error retrieving Instance ID token', error);
             });
     });
 
@@ -88,12 +88,12 @@ if (window.location.protocol === 'https:' &&
 
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
-        console.log('Message received. ', payload);
+        console.log('Message received', payload);
         info.show();
         info_message
             .text('')
             .append('<strong>'+payload.data.title+'</strong>')
-            .append('<em> '+payload.data.body+'</em>')
+            .append('<em>'+payload.data.body+'</em>')
         ;
 
         // register fake ServiceWorker for show notification on mobile devices
@@ -107,7 +107,7 @@ if (window.location.protocol === 'https:' &&
                   registration.showNotification(payload.data.title, payload.data);
                 }).catch(function(error) {
                     // registration failed :(
-                    showError('ServiceWorker registration failed.', error);
+                    showError('ServiceWorker registration failed', error);
                 });
             }
         });
@@ -117,13 +117,13 @@ if (window.location.protocol === 'https:' &&
     messaging.onTokenRefresh(function() {
         messaging.getToken()
             .then(function(refreshedToken) {
-                console.log('Token refreshed.');
+                console.log('Token refreshed');
                 // Send Instance ID token to app server.
                 sendTokenToServer(refreshedToken);
                 updateUIForPushEnabled(refreshedToken);
             })
             .catch(function(error) {
-                showError('Unable to retrieve refreshed token.', error);
+                showError('Unable to retrieve refreshed token', error);
             });
     });
 
@@ -166,19 +166,19 @@ function getToken() {
                         sendTokenToServer(currentToken);
                         updateUIForPushEnabled(currentToken);
                     } else {
-                        showError('No Instance ID token available. Request permission to generate one.');
+                        showError('No Instance ID token available. Request permission to generate one');
                         updateUIForPushPermissionRequired();
                         setTokenSentToServer(false);
                     }
                 })
                 .catch(function(error) {
-                    showError('An error occurred while retrieving token.', error);
+                    showError('An error occurred while retrieving token', error);
                     updateUIForPushPermissionRequired();
                     setTokenSentToServer(false);
                 });
         })
         .catch(function(error) {
-            showError('Unable to get permission to notify.', error);
+            showError('Unable to get permission to notify', error);
         });
 }
 
@@ -223,7 +223,7 @@ function sendNotification(notification) {
             });
         })
         .catch(function(error) {
-            showError('Error retrieving Instance ID token.', error);
+            showError('Error retrieving Instance ID token', error);
         });
 }
 
@@ -277,7 +277,7 @@ function updateUIForPushPermissionRequired() {
 
 function showError(error, error_data) {
     if (typeof error_data !== "undefined") {
-        console.error(error + ' ', error_data);
+        console.error(error, error_data);
     } else {
         console.error(error);
     }
