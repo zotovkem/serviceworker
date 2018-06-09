@@ -9,9 +9,12 @@ const messaging = firebase.messaging();
 
 // Customize notification handler
 messaging.setBackgroundMessageHandler(function(payload) {
-  payload.data.data = payload.data;
+  // FIXME Firebase does not send image yet
+  if (typeof payload.data.image !== 'undefined') {
+    payload.notification.image = payload.data.image;
+  }
 
-  return self.registration.showNotification(payload.data.title, payload.data);
+  return self.registration.showNotification(payload.notification.title, payload.notification);
 });
 
 self.addEventListener('notificationclick', function(event) {
