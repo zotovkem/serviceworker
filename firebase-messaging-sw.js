@@ -11,8 +11,8 @@ const messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('Handling background message', payload);
 
-  // Save data to get parameters in the click handler
-  payload.data.data = payload.data;
+  // Copy data object to get parameters in the click handler
+  payload.data.data = JSON.parse(JSON.stringify(payload.data));
 
   return self.registration.showNotification(payload.data.title, payload.data);
 });

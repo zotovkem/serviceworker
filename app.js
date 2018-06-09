@@ -101,8 +101,8 @@ if (window.location.protocol === 'https:' &&
         Notification.requestPermission(function(permission) {
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
-                  // Save data to get parameters in the click handler
-                  payload.data.data = payload.data;
+                  // Copy data object to get parameters in the click handler
+                  payload.data.data = JSON.parse(JSON.stringify(payload.data));
 
                   registration.showNotification(payload.data.title, payload.data);
                 }).catch(function(error) {
