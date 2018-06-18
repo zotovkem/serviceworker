@@ -35,7 +35,7 @@ function addZero(i) {
 setNotificationDemoBody();
 resetUI();
 
-if (window.location.protocol === 'https:' &&
+if (
     'Notification' in window &&
     'serviceWorker' in navigator &&
     'localStorage' in window &&
@@ -128,9 +128,7 @@ if (window.location.protocol === 'https:' &&
     });
 
 } else {
-    if (window.location.protocol !== 'https:') {
-        showError('Is not from HTTPS');
-    } else if (!('Notification' in window)) {
+    if (!('Notification' in window)) {
         showError('Notification not supported');
     } else if (!('serviceWorker' in navigator)) {
         showError('ServiceWorker not supported');
