@@ -56,4 +56,4 @@ Warning
 
 This application runs in [GitHub Pages](https://pages.github.com/) at address [/serviceworker/](https://peter-gribanov.github.io/serviceworker/) and this path cannot be changed. Therefore, the [original library](http://www.gstatic.com/firebasejs/3.7.2/firebase.js) is [copied](https://github.com/peter-gribanov/serviceworker/blob/master/firebase.js) to this application and the path to `firebase-messaging-sw.js` has been changed.
 
-If you want to copy this application to your website and run it at the root path, you must to [use](https://github.com/peter-gribanov/serviceworker/blob/master/index.html#L95) the [original library](http://www.gstatic.com/firebasejs/3.7.2/firebase.js) and change the path to the serviceworker [here](https://github.com/peter-gribanov/serviceworker/blob/master/app.js#L100).
+If you want to copy this application to your website and run it at the root path, you must [use](https://github.com/peter-gribanov/serviceworker/blob/master/index.html#L95) the [original library](http://www.gstatic.com/firebasejs/3.7.2/firebase.js) and change [path](https://github.com/peter-gribanov/serviceworker/blob/master/app.js#L100) to the serviceworker.
